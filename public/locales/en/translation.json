@@ -1,0 +1,77 @@
+{
+  "generic": {
+    "action": {
+      "add": "Add",
+      "edit": "Edit"
+    },
+    "label": {
+      "status": {
+        "active": "Active"
+      }
+    },
+    "msg": {
+      "info": {
+        "welcome": "welcome"
+      },
+      "warning": {
+        "danger": ""
+      },
+      "error": {},
+      "success": {}
+    }
+  },
+  "auth": {
+    "action": {
+      "login": "Login"
+    },
+    "label": {
+      "emailAddress": "Email Address",
+      "password": "Password"
+    },
+    "placeholder": {
+      "emailPlaceholder": "Enter Email Address",
+      "passwordPlaceholder": "Enter Password"
+    },
+    "msg": {
+      "info": {},
+      "warning": {
+        "error": "Something went wrong, please try again"
+      },
+      "error": {},
+      "success": {}
+    },
+    "validation": {
+      "emailRequired": "Please enter valid email address",
+      "passwordRequired": "Please enter valid password"
+    }
+  },
+  "core": {
+    "action": {},
+    "label": {
+      "pageNotFound": "Page Not Found"
+    },
+    "placeholder": {},
+    "msg": {
+      "info": {},
+      "warning": {},
+      "error": {},
+      "success": {}
+    },
+    "validation": {}
+  },
+  "home": {
+    "action": {},
+    "label": {
+      "dashboard": "Dashboard",
+      "integration": "Integration"
+    },
+    "placeholder": {},
+    "msg": {
+      "info": {},
+      "warning": {},
+      "error": {},
+      "success": {}
+    },
+    "validation": {}
+  }
+}
