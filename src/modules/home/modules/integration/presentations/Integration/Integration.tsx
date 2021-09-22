@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button, Select, Input, Form, Alert } from "antd";
 import FormLabelTemplate from "../../../../../core/modules/ui/templates/FormLabelTemplate";
 import { API_URLS } from "../../../../../core/models/enums/core.enums";
+import "./Integration.less";
 
 const { Option } = Select;
 
@@ -35,7 +36,7 @@ const Integration: React.FC<IntegrationProps> = (props: IntegrationProps) => {
   };
 
   return (
-    <div>
+    <div className="integration-add-form">
       {!showElements && <a href={redirectUrl}>Login to Zoho Recruit</a>}
       {alertMessage !== "" && (
         <Alert message={alertMessage} type="success" closable />

@@ -13,9 +13,9 @@ const IntegrationContainer: React.FC<any> = (
 ) => {
   const [showElements, setShowElements] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState("");
+  const [modulesData, setModulesData] = React.useState([]);
   const search = useLocation().search;
   const integrationFacade: any = useIntegrationFacade();
-  const [modulesData, setModulesData] = React.useState([]);
   let localStorageItems: string[][] = [];
 
   React.useEffect(() => {
@@ -35,10 +35,7 @@ const IntegrationContainer: React.FC<any> = (
       !refreshTokenLocalStorage &&
       expiresInLocalStorage
     ) {
-      var endDateTimeOfAccessToken = new Date();
-      endDateTimeOfAccessToken.setHours(
-        endDateTimeOfAccessToken.getHours() + 1
-      );
+      let endDateTimeOfAccessToken = getEndTimeAccessToken();
       localStorageItems.push(
         ["access_token", access_token],
         ["refresh_token", refresh_token],
@@ -46,6 +43,7 @@ const IntegrationContainer: React.FC<any> = (
         ["endDateTimeOfAccessToken", endDateTimeOfAccessToken.toString()]
       );
       setLocalStorageValues(localStorageItems);
+      getModules();
     }
 
     if (accessTokenLocalStorage) {
@@ -55,7 +53,11 @@ const IntegrationContainer: React.FC<any> = (
       if (isRequiredCallRefreshToken) {
         integrationFacade.generateRefreshAccessToken().then((response: any) => {
           let newAccessToken = response.data.response.access_token;
-          localStorageItems.push(["access_token", newAccessToken]);
+          let endDateTimeOfAccessToken = getEndTimeAccessToken();
+          localStorageItems.push(
+            ["access_token", newAccessToken],
+            ["endDateTimeOfAccessToken", endDateTimeOfAccessToken.toString()]
+          );
           setLocalStorageValues(localStorageItems);
           getModules();
         });
@@ -90,7 +92,12 @@ const IntegrationContainer: React.FC<any> = (
     if (isRequiredCallRefreshToken) {
       integrationFacade.generateRefreshAccessToken().then((response: any) => {
         let newAccessToken = response.data.response.access_token;
-        localStorage.setItem("access_token", newAccessToken);
+        let endDateTimeOfAccessToken = getEndTimeAccessToken();
+        localStorageItems.push(
+          ["access_token", newAccessToken],
+          ["endDateTimeOfAccessToken", endDateTimeOfAccessToken.toString()]
+        );
+        setLocalStorageValues(localStorageItems);
         subscribeNotification(formData);
       });
     } else {
@@ -107,6 +114,12 @@ const IntegrationContainer: React.FC<any> = (
         setShowAlert(response.data.response.message);
       }
     });
+  };
+
+  const getEndTimeAccessToken = () => {
+    var endDateTimeOfAccessToken = new Date();
+    endDateTimeOfAccessToken.setHours(endDateTimeOfAccessToken.getHours() + 1);
+    return endDateTimeOfAccessToken;
   };
 
   // set multiple fields and their value in localstorage

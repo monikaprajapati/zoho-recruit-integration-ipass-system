@@ -150,7 +150,10 @@ app.get("/refreshToken", (req, res) => {
     },
   }).then((response) => {
     console.log("Refresh token :: ", response.data);
-    insertDataInDB(response.data);
+    let toBeRefreshData = {
+      access_token: response.data.access_token,
+    }
+    insertDataInDB(toBeRefreshData);
     res.format({
       "application/json": function () {
         res.status(200).json({
@@ -216,7 +219,7 @@ app.post("/checkNotification", (req, res) => {
       console.log("ERROR : ", err);
     } else {
       accessTokenFromDB = data[0].access_token;
-      let module = req.body.module.replace(/_/g, '');
+      let module = req.body.module.replace(/_/g, "");
       console.log("module ====== ", module);
       // get candidate data
       axios({
@@ -227,15 +230,18 @@ app.post("/checkNotification", (req, res) => {
           accept: "application/json",
         },
       }).then((response) => {
-        console.log("response after fetching module data :: ",response.data.response);
+        console.log(
+          "response after fetching module data :: ",
+          response.data.response
+        );
         let responseData = response.data.response.result;
         let moduleName = Object.keys(responseData)[0];
-        moduleName.replace(/_/g, '');
+        moduleName.replace(/_/g, "");
         let details = responseData[moduleName].row.FL;
         details.forEach((values) => {
           DetailArray.push(values);
         });
-        console.log("array data :: ",DetailArray);
+        console.log("array data :: ", DetailArray);
         getNofifyUrl(channelID, function (err, notifyUrl) {
           if (err) {
             console.log("ERROR : ", err);
